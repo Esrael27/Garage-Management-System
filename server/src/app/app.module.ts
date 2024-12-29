@@ -15,13 +15,14 @@ import { PrismaService } from 'src/prisma/prisma.service';
 
 
 @Module({
-  imports: [ConfigModule.forRoot(),
+  imports: [ConfigModule.forRoot({ isGlobal: true }),
     EmployeeModule, OrderModule, 
     CustomerModule, InventoryModule, 
     ReportModule, NotificationModule, 
     FeedbackModule, AppointmentModule,
     ServiceModule, AuthModule],
-    providers: [PrismaService],
+    providers: [
+      PrismaService],
 
 })
 export class AppModule {}

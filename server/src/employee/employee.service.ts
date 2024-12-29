@@ -119,6 +119,9 @@ async editEmployee (
   updateEmployeeDto: UpdateEmployeeDto,
 ) {
   try {
+
+    
+
     // Check if the employee exists
     const employee = await this.prisma.employee.findUnique({
       where: {
@@ -129,6 +132,21 @@ async editEmployee (
     if (!employee) {
       throw new NotFoundException('Employee not found');
     }
+
+    // before update check if employee email exists
+      const ExistemployeeEmail = await this.prisma.employee.findUnique({
+        where: {
+          employee_email: updateEmployeeDto.employee_email,
+        }
+      })
+
+      if (ExistemployeeEmail) {
+        throw new ConflictException({
+          statusCode: HttpStatus.CONFLICT,
+          message: 'This Email already exists',
+          conflictField: 'employee_email',
+        });
+      }
     
     // Update the employee's details
     const updatedEmployee = await this.prisma.employee.update({

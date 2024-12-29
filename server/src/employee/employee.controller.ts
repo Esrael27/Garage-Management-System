@@ -1,9 +1,10 @@
-import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UsePipes, ValidationPipe } from '@nestjs/common';
+import { Body, Controller, Delete, Get, HttpException, HttpStatus, Param, ParseIntPipe, Post, Put, Query, UseGuards, UsePipes, ValidationPipe } from '@nestjs/common';
 import { RegisterEmployeeDto } from './Dto/register.employee.dto';
 import { EmployeeService } from './employee.service';
 import { UpdateEmployeeDto } from './Dto/update.employee.dto';
 import { SearchEmployeeDto } from './Dto/search.iput.dto';
 import { ApiOperation, ApiResponse, ApiTags, ApiParam, ApiBody, ApiQuery } from '@nestjs/swagger';
+
 
 @ApiTags('employees')
 @Controller('admin')
@@ -53,6 +54,7 @@ export class EmployeeController {
 
   // Get all employees
   @Get('employees')
+  // @UseGuards(JwtAuthGuard)
   @ApiOperation({ summary: 'Get all employees' })
   @ApiResponse({ status: 200, description: 'List of employees' })
   async getAllEmployees() {
