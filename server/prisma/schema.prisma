@@ -1,0 +1,49 @@
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "mysql"
+  url       = env("DATABASE_URL")
+}
+
+model Employee {
+  employee_id      Int            @id @default(autoincrement())
+  employee_email   String         @unique
+  active_employee  Int
+  added_date       DateTime       @default(now()) @updatedAt
+  EmployeeInfo     EmployeeInfo?
+  EmployeePass     EmployeePass?
+  EmployeeRole     EmployeeRole[]
+}
+
+model EmployeeInfo {
+  employee_info_id  Int       @id @default(autoincrement())
+  employee_id       Int       @unique
+  employee_first_name String
+  employee_last_name String
+  employee_phone    String
+  Employee          Employee  @relation(fields: [employee_id], references: [employee_id])
+}
+
+model EmployeePass {
+  employee_pass_id      Int      @id @default(autoincrement())
+  employee_id           Int      @unique
+  employee_password_hashed String
+  Employee              Employee @relation(fields: [employee_id], references: [employee_id])
+}
+
+model EmployeeRole {
+  employee_role_id Int         @id @default(autoincrement())
+  employee_id      Int
+  company_role_id  Int
+  Employee         Employee    @relation(fields: [employee_id], references: [employee_id])
+  CompanyRoles     CompanyRoles @relation(fields: [company_role_id], references: [company_role_id])
+}
+
+model CompanyRoles {
+  company_role_id   Int      @id @default(autoincrement())
+  company_role_name String   @unique
+  EmployeeRole      EmployeeRole[]
+}

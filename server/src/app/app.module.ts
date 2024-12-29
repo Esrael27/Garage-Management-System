@@ -10,6 +10,7 @@ import { AppointmentModule } from '../appointment/appointment.module';
 import { ServiceModule } from '../service/service.module';
 import { AuthModule } from '../auth/auth.module';
 import { ConfigModule } from '@nestjs/config';
+import { PrismaService } from 'src/prisma/prisma.service';
 
 
 
@@ -19,6 +20,8 @@ import { ConfigModule } from '@nestjs/config';
     CustomerModule, InventoryModule, 
     ReportModule, NotificationModule, 
     FeedbackModule, AppointmentModule,
-    ServiceModule, AuthModule]
+    ServiceModule, AuthModule],
+    providers: [PrismaService],
+
 })
 export class AppModule {}
