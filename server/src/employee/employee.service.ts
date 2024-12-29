@@ -1,4 +1,4 @@
-import { ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, HttpException, HttpStatus, Injectable, NotFoundException } from '@nestjs/common';
 import { RegisterEmployeeDto } from './Dto/register.employee.dto';
 import { PrismaService } from 'src/prisma/prisma.service';
 import * as bcrypt from 'bcrypt';
@@ -99,6 +99,10 @@ constructor(private prisma: PrismaService){}
           include: {
             EmployeeInfo: true
           },
+          orderBy: {
+            added_date: "desc"
+            
+          }
         });
 
         return employees;
@@ -184,5 +188,6 @@ async editEmployee (
       }
       }
  }
+
 
 }
